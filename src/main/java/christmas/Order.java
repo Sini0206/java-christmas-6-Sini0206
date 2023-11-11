@@ -38,4 +38,18 @@ public class Order {
         System.out.println(totalPrice);
         return totalPrice;
     }
+
+    public int countOrder(){
+        int count = 0;
+        for (int i = 0; i < orderAmount.size(); i++) {
+            count += orderAmount.get(i);
+        }
+        return count;
+    }
+
+    public boolean checkOrderAmount(){
+        if (countOrder() > 20)
+            isOrderPossible = false;
+        return isOrderPossible;
+    }
 }
