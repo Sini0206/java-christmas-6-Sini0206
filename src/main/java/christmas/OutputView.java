@@ -16,4 +16,11 @@ public class OutputView {
         System.out.println(formatter.format(Order.getTotalPrice())+"원");
     }
 
+    static public void printPresent(){
+        System.out.println("\n<증정 메뉴>");
+        if(Event.presentChampagne == true)
+            System.out.println("샴페인 1개");
+        if(Event.presentChampagne == false)
+            System.out.println("없음");
+    }
 }
