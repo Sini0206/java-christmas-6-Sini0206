@@ -69,6 +69,10 @@ public class Event {
             discount(Menu.Category.MAIN_DISH);
         if(event.contains(eventCategory.SPECIAL_EVENT))
             discount(1000);
+        if(event.contains(eventCategory.DDAY_EVENT)){
+         discount = 1000 + (date.day - 1) * 100;
+         payment = Order.getTotalPrice() - discount;
+        }
     }
     public void discount(Menu.Category category){
         for (int i = 0; i < order.getOrderMenu().size(); i++) {
