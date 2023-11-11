@@ -4,9 +4,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
+
+    static Date date;
+    static String [] menuNameCount = new String[2];
+    static List<Menu.dishInfo> orderMenu = new ArrayList<>(); //  나중에 Order orderMenu로 전달
+    static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
+    static Order order;
+    public static void storeMenuNames(String[] input){
+        List<String> menuNames = new ArrayList<>();     // 변환용(String -> Menu.dishInfo)
+
+        for (int i = 0; i < input.length; i++) {
+            menuNameCount = input[i].trim().split("-"); //  "해산물파스타","2"
+            menuNames.add(menuNameCount[0]);    // "해산물파스타"
+        }
+
+        for (int i = 0; i < menuNames.size(); i++) {
+            orderMenu.add(Menu.dishInfo.valueOf(menuNames.get(i)));
+        }
+    }
+    public static void storeAmount(String [] input){
+        for (int i = 0; i < input.length; i++) {
+            menuNameCount = input[i].trim().split("-"); //  "해산물파스타","2"
+            dishCount.add(Integer.parseInt(menuNameCount[1]));    // "2" -> 2
+        }
+    }
+
+    public static void orderGenerator(){
+        order = new Order(date,orderMenu,dishCount);
+    }
+
     public static void main(String[] args) {
         // TODO: 프로그램 구현
-        InputView.readOrder();
+        String [] input = InputView.readOrder();
+        storeMenuNames(input);
+        storeAmount(input);
+        orderGenerator();
 
+        order.checkOrderPossibility();
     }
 }

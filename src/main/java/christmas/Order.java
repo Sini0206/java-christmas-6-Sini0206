@@ -5,20 +5,20 @@ import java.util.List;
 public class Order {
     Date date;
     List<Menu.dishInfo> orderMenu;
-    List<Integer> orderAmount;
+    List<Integer> dishAmount;
     int totalPrice;
 
     static boolean isOrderPossible = false;
-    Order(Date date, List<Menu.dishInfo> orderMenu, List<Integer> amount){
+    Order(Date date, List<Menu.dishInfo> orderMenu, List<Integer> dishAmount){
         this.date = date;
         this.orderMenu = orderMenu;
-        this.orderAmount = amount;
+        this.dishAmount = dishAmount;
         this.totalPrice = totalPriceCalculator();
     }
 
     private int totalPriceCalculator(){
         for (int i = 0; i < orderMenu.size(); i++) {
-            totalPrice += orderMenu.get(i).getPrice() * orderAmount.get(i);
+            totalPrice += orderMenu.get(i).getPrice() * dishAmount.get(i);
         }
         return totalPrice;
     }
@@ -35,14 +35,13 @@ public class Order {
     }
 
     public int getTotalPrice() {
-        System.out.println(totalPrice);
         return totalPrice;
     }
 
-    public int countOrder(){
+    private int countOrder(){
         int count = 0;
-        for (int i = 0; i < orderAmount.size(); i++) {
-            count += orderAmount.get(i);
+        for (int i = 0; i < dishAmount.size(); i++) {
+            count += dishAmount.get(i);
         }
         return count;
     }
