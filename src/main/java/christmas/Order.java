@@ -6,7 +6,7 @@ public class Order {
     Date date;
     private List<Menu.dishInfo> orderMenu;
     private List<Integer> dishAmount;
-    static private int totalPrice;
+    static private double totalPrice;
 
     static boolean isOrderPossible = false;
     Order(Date date, List<Menu.dishInfo> orderMenu, List<Integer> dishAmount){
@@ -16,7 +16,7 @@ public class Order {
         this.totalPrice = totalPriceCalculator();
     }
 
-    private int totalPriceCalculator(){
+    private double totalPriceCalculator(){
         for (int i = 0; i < orderMenu.size(); i++) {
             totalPrice += orderMenu.get(i).getPrice() * dishAmount.get(i);
         }
@@ -34,7 +34,7 @@ public class Order {
         return isOrderPossible;
     }
 
-    static public int getTotalPrice() {
+    static public double getTotalPrice() {
         return totalPrice;
     }
     public List<Menu.dishInfo> getOrderMenu(){
