@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Order {
     Date date;
-    List<Menu.dishInfo> orderMenu;
-    List<Integer> dishAmount;
-    int totalPrice;
+    private List<Menu.dishInfo> orderMenu;
+    private List<Integer> dishAmount;
+    private int totalPrice;
 
     static boolean isOrderPossible = false;
     Order(Date date, List<Menu.dishInfo> orderMenu, List<Integer> dishAmount){
@@ -36,6 +36,13 @@ public class Order {
 
     public int getTotalPrice() {
         return totalPrice;
+    }
+    public List<Menu.dishInfo> getOrderMenu(){
+        return orderMenu;
+    }
+
+    public List<Integer> getDishAmount(){
+        return dishAmount;
     }
 
     private int countOrder(){

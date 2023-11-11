@@ -6,7 +6,7 @@ import java.util.List;
 public class Application {
 
     static Date date;
-    static String [] menuNameCount = new String[2];
+    static String [] menuNameNCount = new String[2];
     static List<Menu.dishInfo> orderMenu = new ArrayList<>(); //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
     static Order order;
@@ -14,8 +14,8 @@ public class Application {
         List<String> menuNames = new ArrayList<>();     // 변환용(String -> Menu.dishInfo)
 
         for (int i = 0; i < input.length; i++) {
-            menuNameCount = input[i].trim().split("-"); //  "해산물파스타","2"
-            menuNames.add(menuNameCount[0]);    // "해산물파스타"
+            menuNameNCount = input[i].trim().split("-"); //  "해산물파스타","2"
+            menuNames.add(menuNameNCount[0]);    // "해산물파스타"
         }
 
         for (int i = 0; i < menuNames.size(); i++) {
@@ -24,8 +24,8 @@ public class Application {
     }
     public static void storeAmount(String [] input){
         for (int i = 0; i < input.length; i++) {
-            menuNameCount = input[i].trim().split("-"); //  "해산물파스타","2"
-            dishCount.add(Integer.parseInt(menuNameCount[1]));    // "2" -> 2
+            menuNameNCount = input[i].trim().split("-"); //  "해산물파스타","2"
+            dishCount.add(Integer.parseInt(menuNameNCount[1]));    // "2" -> 2
         }
     }
 
@@ -47,5 +47,7 @@ public class Application {
 
         order.checkOrderPossibility();
         Event.checkEventPossible(order);
+
+        OutputView.print(order);
     }
 }
