@@ -2,13 +2,13 @@ package christmas;
 
 public class Date {
     int day;
-    dayType type;
+    dayType type = dayType.WEEKDAY;
     Date(int inputDay){
         day = inputDay;
         //type = classifyType();
     }
     enum dayType{
-        SATURDAY,SUNDAY,HOLIDAY
+        WEEKDAY,SATURDAY,SUNDAY,HOLIDAY
     }
     private dayType classifyType(){
         if (day == 25)

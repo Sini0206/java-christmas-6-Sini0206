@@ -10,7 +10,7 @@ public class Application {
     static List<Menu.dishInfo> orderMenu = new ArrayList<>(); //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
     static Order order;
-    static Event event = new Event();
+    static Event event = new Event(order);
 
     public static void storeMenuNames(String[] input){
         List<String> menuNames = new ArrayList<>();     // 변환용(String -> Menu.dishInfo)
@@ -48,7 +48,7 @@ public class Application {
         orderGenerator();
 
         order.checkOrderPossibility();
-        Event.checkEventPossible(order);
+
         event.presentEvent(order);
 
         OutputView.print(order);
