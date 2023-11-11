@@ -1,18 +1,41 @@
 package christmas;
 
+import java.util.List;
+
 public class Order {
     Date date;
-    Menu.menuGroup orderMenu;
-    int orderAmount;
+    List<Menu.menuInfo> orderMenu;
+    List<Integer> orderAmount;
     int totalPrice;
-    Order(Date date, Menu.menuGroup order, int amount){
+
+    static boolean isOrderPossible = false;
+    Order(Date date, List<Menu.menuInfo> order, List<Integer> amount){
         this.date = date;
         this.orderMenu = order;
         this.orderAmount = amount;
-        this.totalPrice = orderMenu.getPrice() * amount;
+        this.totalPrice = totalPriceCalculator();
     }
 
-    public void checkOrderPossibility(){
+    private int totalPriceCalculator(){
+        for (int i = 0; i < orderMenu.size(); i++) {
+            totalPrice += orderMenu.get(i).getPrice() * orderAmount.get(i);
+        }
+        return totalPrice;
+    }
+    public boolean checkOrderPossibility(){
+        int drinkCount = 0;
+        for (int i = 0; i < orderMenu.size(); i++) {
+            if (orderMenu.get(i).getType() == Menu.menuType.DRINK)
+                drinkCount += 1;
+        }
+        if(drinkCount == orderMenu.size())
+            isOrderPossible = false;
 
+        return isOrderPossible;
+    }
+
+    public int getTotalPrice() {
+        System.out.println(totalPrice);
+        return totalPrice;
     }
 }
