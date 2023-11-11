@@ -30,14 +30,19 @@ public class Application {
     }
 
     public static void orderGenerator(){
+        String [] input = InputView.readOrder();
+        storeMenuNames(input);
+        storeAmount(input);
         order = new Order(date,orderMenu,dishCount);
+    }
+
+    public static void dateGenerator(){
+        date = new Date(InputView.readDate());
     }
 
     public static void main(String[] args) {
         // TODO: 프로그램 구현
-        String [] input = InputView.readOrder();
-        storeMenuNames(input);
-        storeAmount(input);
+        dateGenerator();
         orderGenerator();
 
         order.checkOrderPossibility();
