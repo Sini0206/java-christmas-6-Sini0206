@@ -46,5 +46,6 @@ public class Application {
         orderGenerator();
 
         order.checkOrderPossibility();
+        Event.checkEventPossible(order);
     }
 }
