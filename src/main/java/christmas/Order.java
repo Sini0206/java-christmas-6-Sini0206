@@ -6,7 +6,7 @@ public class Order {
     Date date;
     private List<Menu.dishInfo> orderMenu;
     private List<Integer> dishAmount;
-    private int totalPrice;
+    static private int totalPrice;
 
     static boolean isOrderPossible = false;
     Order(Date date, List<Menu.dishInfo> orderMenu, List<Integer> dishAmount){
@@ -34,7 +34,7 @@ public class Order {
         return isOrderPossible;
     }
 
-    public int getTotalPrice() {
+    static public int getTotalPrice() {
         return totalPrice;
     }
     public List<Menu.dishInfo> getOrderMenu(){

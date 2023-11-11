@@ -49,5 +49,6 @@ public class Application {
         Event.checkEventPossible(order);
 
         OutputView.print(order);
+        OutputView.printTotalPrice();
     }
 }
