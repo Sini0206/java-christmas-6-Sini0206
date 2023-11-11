@@ -9,9 +9,11 @@ public class OutputView {
             System.out.println(order.getOrderMenu().get(i).name()+" "+ order.getDishAmount().get(i) +"개");
         }
     }
+
     static public void printTotalPrice(){ 
         DecimalFormat formatter = new DecimalFormat("###,###");
         System.out.println("\n<할인 전 총주문 금액>");
         System.out.println(formatter.format(Order.getTotalPrice())+"원");
     }
+
 }
