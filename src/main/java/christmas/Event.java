@@ -20,7 +20,7 @@ public class Event {
             isEventPossible = true;
     }
 
-    public void presentEvent(Order order){
+    public void presentEvent(){
         if(order.getTotalPrice() > 120000)
             presentChampagne = true;
     }

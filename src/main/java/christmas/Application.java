@@ -10,7 +10,7 @@ public class Application {
     static List<Menu.dishInfo> orderMenu = new ArrayList<>(); //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
     static Order order;
-    static Event event = new Event(order);
+    static Event event;
 
     public static void storeMenuNames(String[] input){
         List<String> menuNames = new ArrayList<>();     // 변환용(String -> Menu.dishInfo)
@@ -36,20 +36,20 @@ public class Application {
         storeMenuNames(input);
         storeAmount(input);
         order = new Order(date,orderMenu,dishCount);
+        order.checkOrderPossibility();
     }
 
     public static void dateGenerator(){
         date = new Date(InputView.readDate());
     }
-
+    public static void eventGenerator(){ event = new Event(order);}
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         dateGenerator();
         orderGenerator();
 
-        order.checkOrderPossibility();
-
-        event.presentEvent(order);
+        eventGenerator();
+        event.presentEvent();
 
         OutputView.print(order);
         OutputView.printTotalPrice();
