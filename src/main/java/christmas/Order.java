@@ -4,14 +4,14 @@ import java.util.List;
 
 public class Order {
     Date date;
-    List<Menu.menuInfo> orderMenu;
+    List<Menu.dishInfo> orderMenu;
     List<Integer> orderAmount;
     int totalPrice;
 
     static boolean isOrderPossible = false;
-    Order(Date date, List<Menu.menuInfo> order, List<Integer> amount){
+    Order(Date date, List<Menu.dishInfo> orderMenu, List<Integer> amount){
         this.date = date;
-        this.orderMenu = order;
+        this.orderMenu = orderMenu;
         this.orderAmount = amount;
         this.totalPrice = totalPriceCalculator();
     }
@@ -25,7 +25,7 @@ public class Order {
     public boolean checkOrderPossibility(){
         int drinkCount = 0;
         for (int i = 0; i < orderMenu.size(); i++) {
-            if (orderMenu.get(i).getType() == Menu.menuType.DRINK)
+            if (orderMenu.get(i).getType() == Menu.Category.DRINK)
                 drinkCount += 1;
         }
         if(drinkCount == orderMenu.size())
