@@ -5,6 +5,7 @@ public class Date {
     dayType type = dayType.WEEKDAY;
     Date(int inputDay){
         day = inputDay;
+        type = classifyType();
         //type = classifyType();
     }
     enum dayType{

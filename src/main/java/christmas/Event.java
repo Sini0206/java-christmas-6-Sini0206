@@ -18,17 +18,17 @@ public class Event {
         this.order = order;
     }
 
-    public void checkEventPossible(Order order) {
+    private void checkEventPossible(Order order) {
         if (order.getTotalPrice() >= 10000)
             isEventPossible = true;
     }
 
-    public void presentEvent() {
+    private void presentEvent() {
         if (order.getTotalPrice() > 120000)
             presentChampagne = true;
     }
 
-    public void checkEventPeriod() {
+    private void checkEventPeriod() {
         checkEventPossible(order);
 
         if (isEventPossible) {
@@ -43,25 +43,24 @@ public class Event {
         WEEKDAY_EVENT, WEEKEND_EVENT, SPECIAL_EVENT, DDAY_EVENT
     }
 
-    public void classifyEvent() {
+    private void classifyEvents() {
+        checkEventPeriod();
+
         if (isDecemberEvent) {
-            if (date.type == Date.dayType.WEEKDAY)
-                event.add(eventCategory.WEEKDAY_EVENT);
-            if (date.type == Date.dayType.SATURDAY)
-                event.add(eventCategory.WEEKEND_EVENT);
-            if (date.type == Date.dayType.HOLIDAY)
-                event.add(eventCategory.SPECIAL_EVENT);
-            if (date.type == Date.dayType.SUNDAY) {
+            if (date.type == Date.dayType.WEEKDAY)  {event.add(eventCategory.WEEKDAY_EVENT);}
+            if (date.type == Date.dayType.SATURDAY) {event.add(eventCategory.WEEKEND_EVENT);}
+            if (date.type == Date.dayType.HOLIDAY)  {event.add(eventCategory.SPECIAL_EVENT);}
+            if (date.type == Date.dayType.SUNDAY)   {
                 event.add(eventCategory.WEEKEND_EVENT);
                 event.add(eventCategory.SPECIAL_EVENT);
             }
         }
-        if (isDDayEvent)
-            event.add(eventCategory.DDAY_EVENT);
+        if(isDDayEvent){event.add(eventCategory.DDAY_EVENT);}
     }
 
     public void applyEvent() {
-        classifyEvent();
+        presentEvent();
+        classifyEvents();
 
         if(event.contains(eventCategory.WEEKDAY_EVENT))
             discount(Menu.Category.DESSERT);

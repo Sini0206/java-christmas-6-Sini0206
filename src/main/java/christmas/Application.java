@@ -36,7 +36,6 @@ public class Application {
         storeMenuNames(input);
         storeAmount(input);
         order = new Order(date,orderMenu,dishCount);
-        order.checkOrderPossibility();
     }
 
     public static void dateGenerator(){
@@ -46,10 +45,12 @@ public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         dateGenerator();
+
         orderGenerator();
+        order.checkOrderPossibility();
 
         eventGenerator();
-        event.presentEvent();
+        event.applyEvent();
 
         OutputView.print(order);
         OutputView.printTotalPrice();
