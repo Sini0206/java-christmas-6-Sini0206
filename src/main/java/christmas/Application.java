@@ -41,7 +41,7 @@ public class Application {
     public static void dateGenerator(){
         date = new Date(InputView.readDate());
     }
-    public static void eventGenerator(){ event = new Event(order);}
+    public static void eventGenerator(){ event = new Event(order,date);}
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         dateGenerator();
@@ -52,8 +52,5 @@ public class Application {
         eventGenerator();
         event.applyEvent();
 
-        OutputView.print(order);
-        OutputView.printTotalPrice();
-        OutputView.printPresent();
     }
 }

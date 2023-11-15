@@ -6,7 +6,6 @@ public class Date {
     Date(int inputDay){
         day = inputDay;
         type = classifyType();
-        //type = classifyType();
     }
     enum dayType{
         WEEKDAY,SATURDAY,SUNDAY,HOLIDAY
