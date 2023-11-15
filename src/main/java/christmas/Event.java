@@ -86,7 +86,7 @@ public class Event {
         if (event.contains(eventCategory.WEEKEND_EVENT))
             totalDiscount += discountWithMenu(Menu.Category.MAIN_DISH,eventCategory.WEEKEND_EVENT);
         if (event.contains(eventCategory.SPECIAL_EVENT))
-            totalDiscount += discount(1000,eventCategory.SPECIAL_EVENT);
+            totalDiscount += discount(specialDC,eventCategory.SPECIAL_EVENT);
         if (event.contains(eventCategory.DDAY_EVENT)) {
             totalDiscount += discountWithDate(eventCategory.DDAY_EVENT);
         }
