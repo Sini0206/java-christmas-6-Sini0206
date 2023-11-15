@@ -54,5 +54,14 @@ public class OutputView {
         System.out.println("\n<할인 후 예상 결제 금액>");
         System.out.println(formatter.format(Event.getPayment())+"원");
     }
+    static public void printBadge(){
+        System.out.println("\n<12월 이벤트 배지>");
+        if(Event.getBadge() == null){
+            System.out.println("없음");
+            return;
+        }
+        System.out.println(Event.getBadge());
+    }
+
 
 }

@@ -138,8 +138,8 @@ public class Event {
             badge = Badge.SANTA;
     }
 
-    static public String getBadge(){
-        return badge.toString();
+    static public Badge getBadge(){
+        return badge;
     }
 
 }
