@@ -49,8 +49,10 @@ public class OutputView {
         }
         System.out.println(formatter.format(-Event.getTotalDiscount()) + "원");
     }
+
     static public void printPayment(){
         System.out.println("\n<할인 후 예상 결제 금액>");
         System.out.println(formatter.format(Event.getPayment())+"원");
     }
+
 }

@@ -117,11 +117,29 @@ public class Event {
     static public double getTotalDiscount(){
         return totalDiscount;
     }
+
     static public double getPayment(){
         double payment = Order.getTotalPrice() - totalDiscount;
         if(presentChampagne)
             payment += Menu.dishInfo.샴페인.getPrice();
         return payment;
+    }
+
+    enum Badge{
+        STAR, TREE, SANTA
+    }
+    private static Badge badge;
+    public void giveBadge(){
+        if(totalDiscount >= 5000)
+            badge = Badge.STAR;
+        if(totalDiscount >= 10000)
+            badge = Badge.TREE;
+        if(totalDiscount >= 20000)
+            badge = Badge.SANTA;
+    }
+
+    static public String getBadge(){
+        return badge.toString();
     }
 
 }
