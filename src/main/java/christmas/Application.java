@@ -49,6 +49,7 @@ public class Application {
         OutputView.printBenefit();
         OutputView.printTotalBenefit();
         OutputView.printPayment();
+        OutputView.printBadge();
     }
     public static void main(String[] args) {
         // TODO: 프로그램 구현
