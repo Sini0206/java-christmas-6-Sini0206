@@ -2,6 +2,7 @@ package christmas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Application {
 
@@ -12,7 +13,7 @@ public class Application {
     static List<Menu.dishInfo> orderMenu = new ArrayList<>(); //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
 
-    public static void storeMenuNames(String[] input){
+    public static void storeMenuNames(String[] input)throws NoSuchElementException {
         List<String> menuNames = new ArrayList<>();     // 변환용(String -> Menu.dishInfo)
 
         for (int i = 0; i < input.length; i++) {
@@ -24,10 +25,11 @@ public class Application {
             orderMenu.add(Menu.dishInfo.valueOf(menuNames.get(i))); //  "해산물파스타" -> 해산물파스타
         }
     }
-    public static void storeAmount(String [] input){
+
+    public static void storeAmount(String [] input) throws IllegalArgumentException{
         for (int i = 0; i < input.length; i++) {
-            if(Integer.parseInt(menuNameNCount[1]) < 1){
-                throw new IllegalArgumentException();
+            if(Integer.parseInt(menuNameNCount[1]) < 1){    // 메뉴의 개수가 1 이상의 숫자일 경우
+                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
             }
             dishCount.add(Integer.parseInt(menuNameNCount[1]));    // "2" -> 2
         }
@@ -35,13 +37,15 @@ public class Application {
 
     public static void orderGenerator(){
         boolean validateOrder = true;
-        try{
-            String [] input = InputView.readOrder();
+        try {
+            String[] input = InputView.readOrder();
             storeMenuNames(input);
             storeAmount(input);
-            order = new Order(date,orderMenu,dishCount);
-        }catch (IllegalArgumentException e){
-            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
+            order = new Order(date, orderMenu, dishCount);
+        } catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
             validateOrder = false;
         }
         if(!validateOrder)
