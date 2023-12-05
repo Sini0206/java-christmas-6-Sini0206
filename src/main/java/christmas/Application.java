@@ -9,14 +9,14 @@ public class Application {
     static Date date;
     static Order order;
     static Event event;
-    static List<Menu.dishInfo> MenuNames = new ArrayList<>();    //  나중에 Order orderMenu로 전달
+    static List<Menu.dishInfo> menuNames = new ArrayList<>();    //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
     static boolean validateOrder = true;
 
     public static void storeMenuNames(ArrayList<String[]> input) throws NoSuchElementException {
         for (int i = 0; i < input.size(); i++) {
             String menuName = input.get(i)[0];    //  "해산물파스타"
-            MenuNames.add(Menu.dishInfo.valueOf(menuName));    //  "해산물파스타" -> 해산물파스타
+            menuNames.add(Menu.dishInfo.valueOf(menuName));    //  "해산물파스타" -> 해산물파스타
         }
     }
 
@@ -25,8 +25,7 @@ public class Application {
             int number = Integer.parseInt(input.get(i)[1]); //  "2" -> 2
 
             if (number < 1) {    // 메뉴의 개수가 1 미만의 숫자일 경우
-                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
-                //validateOrder = false;
+                throw new IllegalArgumentException();
             }
             dishCount.add(number);
         }
@@ -36,7 +35,7 @@ public class Application {
         ArrayList<String[]> input = InputView.readOrder();
         storeMenuNames(input);
         storeAmount(input);
-        order = new Order(date, MenuNames, dishCount);
+        order = new Order(date, menuNames, dishCount);
     }
 
     public static void checkValidateOrder() {
@@ -49,8 +48,11 @@ public class Application {
             validateOrder = false;
         }
 
-        if (!validateOrder)
+        if (!validateOrder) {
+            menuNames.clear();
+            dishCount.clear();
             orderGenerator();
+        }
     }
 
     public static void dateGenerator() {

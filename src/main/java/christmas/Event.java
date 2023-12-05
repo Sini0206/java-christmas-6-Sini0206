@@ -129,7 +129,7 @@ public class Event {
         별, 트리, 산타
     }
     private static Badge badge;
-    public static void giveBadge(){
+    public void giveBadge(){
         if(totalDiscount >= 5000)
             badge = Badge.별;
         if(totalDiscount >= 10000)
