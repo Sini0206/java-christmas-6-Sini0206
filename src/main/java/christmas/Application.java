@@ -9,11 +9,11 @@ public class Application {
     static Date date;
     static Order order;
     static Event event;
-    static String [] menuNameNCount = new String[2];
+    static String[] menuNameNCount = new String[2];
     static List<Menu.dishInfo> orderMenu = new ArrayList<>(); //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
 
-    public static void storeMenuNames(String[] input)throws NoSuchElementException {
+    public static void storeMenuNames(String[] input) throws NoSuchElementException {
         List<String> menuNames = new ArrayList<>();     // 변환용(String -> Menu.dishInfo)
 
         for (int i = 0; i < input.length; i++) {
@@ -26,37 +26,45 @@ public class Application {
         }
     }
 
-    public static void storeAmount(String [] input) throws IllegalArgumentException{
+    public static void storeAmount(String[] input) throws IllegalArgumentException {
         for (int i = 0; i < input.length; i++) {
-            if(Integer.parseInt(menuNameNCount[1]) < 1){    // 메뉴의 개수가 1 이상의 숫자일 경우
+            if (Integer.parseInt(menuNameNCount[1]) < 1) {    // 메뉴의 개수가 1 이상의 숫자일 경우
                 throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
             }
             dishCount.add(Integer.parseInt(menuNameNCount[1]));    // "2" -> 2
         }
     }
 
-    public static void orderGenerator(){
+    public static void orderGenerator() {
+        String[] input = InputView.readOrder();
+        storeMenuNames(input);
+        storeAmount(input);
+        order = new Order(date, orderMenu, dishCount);
+    }
+
+    public static void checkValidateOrder() {
         boolean validateOrder = true;
         try {
-            String[] input = InputView.readOrder();
-            storeMenuNames(input);
-            storeAmount(input);
-            order = new Order(date, orderMenu, dishCount);
+            orderGenerator();
         } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             validateOrder = false;
         }
-        if(!validateOrder)
+        if (!validateOrder)
             orderGenerator();
     }
 
-    public static void dateGenerator(){
+    public static void dateGenerator() {
         date = new Date(InputView.readDate());
     }
-    public static void eventGenerator(){ event = new Event(order,date);}
-    public static void printOrderResult(){
+
+    public static void eventGenerator() {
+        event = new Event(order, date);
+    }
+
+    public static void printOrderResult() {
         OutputView.print(order);
         OutputView.printTotalPrice();
         OutputView.printPresent();
@@ -65,16 +73,14 @@ public class Application {
         OutputView.printPayment();
         OutputView.printBadge();
     }
-    public static void validateMenu(){
 
-    }
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
 
         dateGenerator();
 
-        orderGenerator();
+        checkValidateOrder();
         order.checkOrderPossibility();
 
         eventGenerator();

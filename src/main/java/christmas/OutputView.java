@@ -27,15 +27,15 @@ public class OutputView {
 
     static public void printBenefit(){
         System.out.println("\n<혜택 내역>");
-        if(Event.isEventPossible == false)
+        if(!Event.isEventPossible)
             System.out.println("없음");
-        if(Event.event.contains(Event.eventCategory.DDAY_EVENT))
+        if(Event.event.contains(Event.eventCategory.DDAY_EVENT) && Event.eventCategory.DDAY_EVENT.getDcAmount() > 0)
             System.out.println("크리스마스 디데이 할인: " + formatter.format(-Event.eventCategory.DDAY_EVENT.getDcAmount()) + "원");
-        if(Event.event.contains(Event.eventCategory.WEEKDAY_EVENT))
+        if(Event.event.contains(Event.eventCategory.WEEKDAY_EVENT) && Event.eventCategory.WEEKDAY_EVENT.getDcAmount() > 0)
             System.out.println("평일 할인: " + formatter.format(-Event.eventCategory.WEEKDAY_EVENT.getDcAmount()) + "원");
-        if(Event.event.contains(Event.eventCategory.WEEKEND_EVENT))
+        if(Event.event.contains(Event.eventCategory.WEEKEND_EVENT) && Event.eventCategory.WEEKEND_EVENT.getDcAmount() > 0)
             System.out.println("주말 할인: " + formatter.format(-Event.eventCategory.WEEKEND_EVENT.getDcAmount()) + "원");
-        if(Event.event.contains(Event.eventCategory.SPECIAL_EVENT))
+        if(Event.event.contains(Event.eventCategory.SPECIAL_EVENT) && Event.eventCategory.SPECIAL_EVENT.getDcAmount() > 0)
             System.out.println("특별 할인: " + formatter.format(-Event.eventCategory.SPECIAL_EVENT.getDcAmount()) + "원");
         if(Event.presentChampagne)
             System.out.println("증정 이벤트: " + formatter.format(-Menu.dishInfo.샴페인.getPrice()) +"원");
