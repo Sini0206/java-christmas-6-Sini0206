@@ -85,6 +85,7 @@ public class Application {
 
         eventGenerator();
         event.applyEvent();
+        event.giveBadge();
 
         printOrderResult();
     }

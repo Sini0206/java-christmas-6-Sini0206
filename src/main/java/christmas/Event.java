@@ -126,16 +126,16 @@ public class Event {
     }
 
     enum Badge{
-        STAR, TREE, SANTA
+        별, 트리, 산타
     }
     private static Badge badge;
-    public void giveBadge(){
+    public static void giveBadge(){
         if(totalDiscount >= 5000)
-            badge = Badge.STAR;
+            badge = Badge.별;
         if(totalDiscount >= 10000)
-            badge = Badge.TREE;
+            badge = Badge.트리;
         if(totalDiscount >= 20000)
-            badge = Badge.SANTA;
+            badge = Badge.산타;
     }
 
     static public Badge getBadge(){
