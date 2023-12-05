@@ -23,11 +23,15 @@ public class InputView {
         }
         return inputDate;
     }
-    public static String[] readOrder(){
+    public static ArrayList<String[]> readOrder(){
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
-        String [] inputOrder = Console.readLine().trim().split(","); // input:["해산물파스타-2","레드와인-1","초코케이크-1"]
+        String [] inputOrder = Console.readLine().trim().split(","); //   ["해산물파스타-2","레드와인-1","초코케이크-1"]
 
-        return inputOrder;
+        ArrayList<String[]> orderList = new ArrayList<>();
+        for (int i = 0; i < inputOrder.length; i++) {
+            orderList.add(inputOrder[i].trim().split("-")); //  orderList.get(i): [["해산물파스타"],["2"]]
+        }
+        return orderList;
     }
 
     private static boolean validateDate(String input) {

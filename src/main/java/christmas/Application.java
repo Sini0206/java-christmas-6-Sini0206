@@ -9,41 +9,37 @@ public class Application {
     static Date date;
     static Order order;
     static Event event;
-    static String[] menuNameNCount = new String[2];
-    static List<Menu.dishInfo> orderMenu = new ArrayList<>(); //  나중에 Order orderMenu로 전달
+    static List<Menu.dishInfo> MenuNames = new ArrayList<>();    //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
 
-    public static void storeMenuNames(String[] input) throws NoSuchElementException {
-        List<String> menuNames = new ArrayList<>();     // 변환용(String -> Menu.dishInfo)
-
-        for (int i = 0; i < input.length; i++) {
-            menuNameNCount = input[i].trim().split("-"); //  "해산물파스타","2"
-            menuNames.add(menuNameNCount[0]);    // "해산물파스타"
-        }
-
-        for (int i = 0; i < menuNames.size(); i++) {
-            orderMenu.add(Menu.dishInfo.valueOf(menuNames.get(i))); //  "해산물파스타" -> 해산물파스타
+    public static void storeMenuNames(ArrayList<String[]> input) throws NoSuchElementException {
+        for (int i = 0; i < input.size(); i++) {
+            String menuName = input.get(i)[0];    //  "해산물파스타"
+            MenuNames.add(Menu.dishInfo.valueOf(menuName));    //  "해산물파스타" -> 해산물파스타
         }
     }
 
-    public static void storeAmount(String[] input) throws IllegalArgumentException {
-        for (int i = 0; i < input.length; i++) {
-            if (Integer.parseInt(menuNameNCount[1]) < 1) {    // 메뉴의 개수가 1 이상의 숫자일 경우
+    public static void storeAmount(List<String[]> input) throws IllegalArgumentException {
+        for (int i = 0; i < input.size(); i++) {
+            int number = Integer.parseInt(input.get(i)[1]); //  "2" -> 2
+
+            if (number < 1) {    // 메뉴의 개수가 1 미만의 숫자일 경우
                 throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
             }
-            dishCount.add(Integer.parseInt(menuNameNCount[1]));    // "2" -> 2
+            dishCount.add(number);
         }
     }
 
     public static void orderGenerator() {
-        String[] input = InputView.readOrder();
+        ArrayList<String[]> input = InputView.readOrder();
         storeMenuNames(input);
         storeAmount(input);
-        order = new Order(date, orderMenu, dishCount);
+        order = new Order(date, MenuNames, dishCount);
     }
 
     public static void checkValidateOrder() {
         boolean validateOrder = true;
+
         try {
             orderGenerator();
         } catch (NoSuchElementException e) {
@@ -52,6 +48,7 @@ public class Application {
             System.out.println(e.getMessage());
             validateOrder = false;
         }
+
         if (!validateOrder)
             orderGenerator();
     }
