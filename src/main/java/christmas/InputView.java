@@ -44,8 +44,4 @@ public class InputView {
         }
         return true;
     }
-
-    private static void handleException(){
-
-    }
 }

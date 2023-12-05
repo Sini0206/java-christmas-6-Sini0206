@@ -11,21 +11,27 @@ public class Application {
     static Event event;
     static List<Menu.dishInfo> menuNames = new ArrayList<>();    //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
-    static boolean validateOrder = true;
+    static boolean validateOrder = false;
 
-    public static void storeMenuNames(ArrayList<String[]> input) throws NoSuchElementException {
+    public static void storeMenuNames(ArrayList<String[]> input) {
         for (int i = 0; i < input.size(); i++) {
             String menuName = input.get(i)[0];    //  "해산물파스타"
             menuNames.add(Menu.dishInfo.valueOf(menuName));    //  "해산물파스타" -> 해산물파스타
         }
     }
 
-    public static void storeAmount(List<String[]> input) throws IllegalArgumentException {
+    public static void checkDuplicatedMenu() {
+        if (menuNames.stream().distinct().count() != menuNames.size()) {
+            throw new IllegalArgumentException("중복");
+        }
+    }
+
+    public static void storeAmount(List<String[]> input) {
         for (int i = 0; i < input.size(); i++) {
             int number = Integer.parseInt(input.get(i)[1]); //  "2" -> 2
 
             if (number < 1) {    // 메뉴의 개수가 1 미만의 숫자일 경우
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("1 미만");
             }
             dishCount.add(number);
         }
@@ -34,24 +40,23 @@ public class Application {
     public static void orderGenerator() {
         ArrayList<String[]> input = InputView.readOrder();
         storeMenuNames(input);
+        checkDuplicatedMenu();
         storeAmount(input);
+
         order = new Order(date, menuNames, dishCount);
     }
 
     public static void checkValidateOrder() {
         try {
             orderGenerator();
+            validateOrder = true;
         } catch (NoSuchElementException e) {    //  없는 메뉴 검색한 경우
             throw new IllegalArgumentException();
         } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
             System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
-            validateOrder = false;
-        }
-
-        if (!validateOrder) {
             menuNames.clear();
             dishCount.clear();
-            orderGenerator();
         }
     }
 
@@ -79,7 +84,9 @@ public class Application {
 
         dateGenerator();
 
-        checkValidateOrder();
+        while (!validateOrder){
+            checkValidateOrder();
+        }
         order.checkOrderPossibility();
 
         eventGenerator();
