@@ -11,6 +11,7 @@ public class Application {
     static Event event;
     static List<Menu.dishInfo> MenuNames = new ArrayList<>();    //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
+    static boolean validateOrder = true;
 
     public static void storeMenuNames(ArrayList<String[]> input) throws NoSuchElementException {
         for (int i = 0; i < input.size(); i++) {
@@ -25,6 +26,7 @@ public class Application {
 
             if (number < 1) {    // 메뉴의 개수가 1 미만의 숫자일 경우
                 throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
+                //validateOrder = false;
             }
             dishCount.add(number);
         }
@@ -38,14 +40,12 @@ public class Application {
     }
 
     public static void checkValidateOrder() {
-        boolean validateOrder = true;
-
         try {
             orderGenerator();
-        } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
+        } catch (NoSuchElementException e) {    //  없는 메뉴 검색한 경우
+            throw new IllegalArgumentException();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
             validateOrder = false;
         }
 
