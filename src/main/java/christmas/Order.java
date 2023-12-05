@@ -8,7 +8,7 @@ public class Order {
     private List<Integer> dishAmount;
     static private double totalPrice;
 
-    static boolean isOrderPossible = false;
+    static boolean isPossible = false;
     Order(Date date, List<Menu.dishInfo> orderMenu, List<Integer> dishAmount){
         this.date = date;
         this.orderMenu = orderMenu;
@@ -22,16 +22,17 @@ public class Order {
         }
         return totalPrice;
     }
-    public boolean checkOrderPossibility(){
+    public void checkPossibility(){
         int drinkCount = 0;
         for (int i = 0; i < orderMenu.size(); i++) {
             if (orderMenu.get(i).getType() == Menu.Category.DRINK)
                 drinkCount += 1;
         }
-        if(drinkCount == orderMenu.size())
-            isOrderPossible = false;
+        if(drinkCount == orderMenu.size())  //  음료만 주문했을 경우
+            isPossible = false;
 
-        return isOrderPossible;
+        if (countOrder() > 20)  //  주문 개수가 20개 초과일 경우
+            isPossible = false;
     }
 
     static public double getTotalPrice() {
@@ -51,11 +52,5 @@ public class Order {
             count += dishAmount.get(i);
         }
         return count;
-    }
-
-    public boolean checkOrderAmount(){
-        if (countOrder() > 20)
-            isOrderPossible = false;
-        return isOrderPossible;
     }
 }

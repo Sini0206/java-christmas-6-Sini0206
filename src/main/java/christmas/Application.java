@@ -11,7 +11,6 @@ public class Application {
     static Event event;
     static List<Menu.dishInfo> menuNames = new ArrayList<>();    //  나중에 Order orderMenu로 전달
     static List<Integer> dishCount = new ArrayList<>();    //  나중에 Order(amount)로 전달
-    static boolean validateOrder = false;
 
     public static void storeMenuNames(ArrayList<String[]> input) {
         for (int i = 0; i < input.size(); i++) {
@@ -49,11 +48,11 @@ public class Application {
     public static void checkValidateOrder() {
         try {
             orderGenerator();
-            validateOrder = true;
+            order.checkPossibility();
+            Order.isPossible = true;
         } catch (NoSuchElementException e) {    //  없는 메뉴 검색한 경우
             throw new IllegalArgumentException();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
             System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
             menuNames.clear();
             dishCount.clear();
@@ -83,12 +82,9 @@ public class Application {
         System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
 
         dateGenerator();
-
-        while (!validateOrder){
+        while (!Order.isPossible){
             checkValidateOrder();
         }
-        order.checkOrderPossibility();
-
         eventGenerator();
         event.applyEvent();
         event.giveBadge();
