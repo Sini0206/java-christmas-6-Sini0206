@@ -21,11 +21,13 @@ public class Application {
 
     public static void checkDuplicatedMenu() {
         if (menuNames.stream().distinct().count() != menuNames.size()) {
+            System.out.println(menuNames.stream().distinct());
+            System.out.println(menuNames);
             throw new IllegalArgumentException("중복");
         }
     }
 
-    public static void storeAmount(List<String[]> input) {
+    public static void storeAmount(List<String[]> input) throws IllegalArgumentException {
         for (int i = 0; i < input.size(); i++) {
             int number = Integer.parseInt(input.get(i)[1]); //  "2" -> 2
 
@@ -48,15 +50,24 @@ public class Application {
     public static void checkValidateOrder() {
         try {
             orderGenerator();
-            order.checkPossibility();
-            Order.isPossible = true;
-        } catch (NoSuchElementException e) {    //  없는 메뉴 검색한 경우
-            throw new IllegalArgumentException();
+        } catch (NoSuchElementException e) {
+            System.out.println();
         } catch (IllegalArgumentException e) {
-            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해주세요.");
-            menuNames.clear();
-            dishCount.clear();
+            getReorder();
         }
+        if(!order.checkPossibility())
+            getReorder();
+    }
+
+    public static void orderInitializer() {
+        menuNames.clear();
+        dishCount.clear();
+        System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+    }
+
+    public static void getReorder(){
+        orderInitializer();
+        checkValidateOrder();
     }
 
     public static void dateGenerator() {
@@ -69,7 +80,7 @@ public class Application {
 
     public static void printOrderResult() {
         OutputView.print(order);
-        OutputView.printTotalPrice();
+        OutputView.printTotalPrice(order);
         OutputView.printPresent();
         OutputView.printBenefit();
         OutputView.printTotalBenefit();
@@ -80,13 +91,12 @@ public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
-
         dateGenerator();
-        while (!Order.isPossible){
-            checkValidateOrder();
-        }
+        checkValidateOrder();
+
         eventGenerator();
         event.applyEvent();
+        event.calculatePayment();
         event.giveBadge();
 
         printOrderResult();

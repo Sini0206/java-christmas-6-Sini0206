@@ -10,10 +10,11 @@ public class Event {
     boolean isDDayEvent = false;
     Date date;
     static List<eventCategory> event = new ArrayList<>();
-    static Order order;
+    Order order;
     static private double totalDiscount = 0;
     static double weekDC, weekendDC, dDayDC;
     static final double specialDC = 1000;
+    private static double payment;
 
     Event(Order order, Date date) {
         this.order = order;
@@ -118,10 +119,13 @@ public class Event {
         return totalDiscount;
     }
 
-    static public double getPayment(){
-        double payment = Order.getTotalPrice() - totalDiscount;
+    public void calculatePayment(){
+        payment = order.getTotalPrice() - totalDiscount;
         if(presentChampagne)
             payment += Menu.dishInfo.샴페인.getPrice();
+    }
+
+    public static double getPayment(){
         return payment;
     }
 

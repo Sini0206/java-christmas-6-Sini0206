@@ -3,7 +3,6 @@ package christmas;
 import java.text.DecimalFormat;
 
 public class OutputView {
-
     static DecimalFormat formatter = new DecimalFormat("###,###");
     static public void print(Order order){
         System.out.println("\n<주문 메뉴>");
@@ -12,16 +11,16 @@ public class OutputView {
         }
     }
 
-    static public void printTotalPrice(){
+    static public void printTotalPrice(Order order){
         System.out.println("\n<할인 전 총주문 금액>");
-        System.out.println(formatter.format(Order.getTotalPrice())+"원");
+        System.out.println(formatter.format(order.getTotalPrice())+"원");
     }
 
     static public void printPresent(){
         System.out.println("\n<증정 메뉴>");
-        if(Event.presentChampagne == true)
+        if(Event.presentChampagne)
             System.out.println("샴페인 1개");
-        if(Event.presentChampagne == false)
+        if(!Event.presentChampagne)
             System.out.println("없음");
     }
 
