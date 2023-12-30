@@ -21,8 +21,6 @@ public class Application {
 
     public static void checkDuplicatedMenu() {
         if (menuNames.stream().distinct().count() != menuNames.size()) {
-            System.out.println(menuNames.stream().distinct());
-            System.out.println(menuNames);
             throw new IllegalArgumentException("중복");
         }
     }
